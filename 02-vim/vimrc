@@ -1,0 +1,43 @@
+colorscheme desert
+
+" Display
+set relativenumber
+set nowrap
+set laststatus=2
+set scrolloff=3
+set colorcolumn=81
+
+" Misc
+set nocompatible
+set mouse+=a
+set hidden
+set wildmenu
+set diffopt+=vertical
+
+" Indentation and tab key handling
+set tabstop=2 shiftwidth=2 softtabstop=2
+set smarttab
+set expandtab
+set autoindent
+set smartindent
+
+" Search related
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+
+" Files
+set backup
+set undofile
+set directory=~/.vim/vimswap//
+set backupdir=~/.vim/vimbackup//
+set undodir=~/.vim/vimundo//
+set viminfo+=n~/.vim/misc/viminfo
+
+" Wildmenu
+set wildignorecase
+set wildignore+=*.pyc,*.retry
+
+" Speed up grep
+" set grepprg=ag\ --vimgrep\ $*

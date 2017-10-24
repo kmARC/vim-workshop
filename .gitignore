@@ -1,0 +1,5 @@
+**/vimswap/**
+**/vimundo/**
+**/vimbackup/**
+**/misc/**
+!.gitkeep
