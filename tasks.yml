@@ -1,0 +1,68 @@
+# vim: set ft=ansible.yaml fdm=marker foldmarker=[[[,]]]:
+---
+
+
+- hosts: all  # [[[
+  tasks:
+    - name: Set hostname
+      hostname: name="{{ inventory_hostname }}"
+      become: true
+    - name: Copy template "hosts" to "/etc/hosts"
+      template:
+        src: hosts.j2
+        dest: /etc/hosts
+      become: true
+    - name: Copy CA certificates
+      copy:
+        src: "{{ item }}"
+        dest: "/usr/local/share/ca-certificates/"
+      become: true
+      with_fileglob:
+        - ssl/*.pem
+        - ssl/*.crt
+      notify: Update CA certificates
+  handlers:
+    - name: Update CA certificates
+      command: update-ca-certificates
+      become: true
+# ]]]
+
+- hosts: dockers  # [[[
+  tasks:
+    - name: Install docker dependencies
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - python-pip
+        - docker.io
+      become: true
+      notify: "Restart service docker"
+    - name: Ensure docker dir exists
+      file:
+        path: /etc/systemd/system/docker.service.d/
+        state: directory
+      become: true
+    - name: Set docker proxy
+      template:
+        src: docker-http-proxy.conf.j2
+        dest: /etc/systemd/system/docker.service.d/http-proxy.conf
+      become: true
+      notify: "Restart service docker"
+    - name: Install docker-py dependencies
+      pip:
+        name: docker-py
+      become: true
+    - name: Add unprivileged user to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: true
+      become: true
+  handlers:
+    - name: Restart service docker
+      systemd:
+        name: docker
+        state: restarted
+        daemon_reload: true
+      become: true
+# ]]]
