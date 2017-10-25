@@ -26,6 +26,9 @@ Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
+" Markdown
+Plug 'shime/vim-livedown', {'for': 'markdown'}
+
 call plug#end()
 
 syntax on
@@ -78,5 +81,5 @@ set wildignore+=*.pyc,*.retry
 " set grepprg=ag\ --vimgrep\ $*
 
 let g:UltiSnipsExpandTrigger = "<c-j>"
-let g:UltiSnipsListSnippets = "<tab>"
+let g:UltiSnipsListSnippets = "<c-h>"
 
