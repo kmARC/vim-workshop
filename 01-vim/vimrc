@@ -1,4 +1,6 @@
+" Colors
 colorscheme desert
+set bg=light
 
 " Display
 set relativenumber

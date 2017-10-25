@@ -1,8 +1,35 @@
 call plug#begin('~/.vim/plugged')
+
+" Tree-like panel to navigate files
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+" Commenting
+Plug 'tpope/vim-commentary'
+
+" Linter
+Plug 'w0rp/ale'
+
+" Git-related
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'shumphrey/fugitive-gitlab.vim'
+
+" Filetype helpers
+Plug 'hashivim/vim-terraform'  , {'for': 'terraform'}
+Plug 'pearofducks/ansible-vim' , {'for': 'ansible*'}
+
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
 call plug#end()
 
+syntax on
+filetype plugin indent on
+
+" Colors
 colorscheme desert
+set bg=light
 
 " Display
 set relativenumber
@@ -45,3 +72,7 @@ set wildignore+=*.pyc,*.retry
 
 " Speed up grep
 " set grepprg=ag\ --vimgrep\ $*
+
+let g:UltiSnipsExpandTrigger = "<c-j>"
+let g:UltiSnipsListSnippets = "<tab>"
+
