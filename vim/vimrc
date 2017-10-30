@@ -3,6 +3,13 @@ call plug#begin('~/.vim/plugged')
 " Tree-like panel to navigate files
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
+" Fuzzy finder
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
+" Autocompletion
+Plug 'maralla/completor.vim'
+
 " Commenting
 Plug 'tpope/vim-commentary'
 
@@ -22,31 +29,44 @@ Plug 'pearofducks/ansible-vim' , {'for': 'ansible*'}
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 
-" Fuzzy finder
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-
 " Markdown
 Plug 'shime/vim-livedown', {'for': 'markdown'}
 
+" Theme
+Plug 'romainl/Apprentice'
+Plug 'itchyny/lightline.vim'
+
 call plug#end()
 
+" Use modern vim
 syntax on
 filetype plugin indent on
+set nocompatible
+
 
 " Colors
-colorscheme desert
-set bg=light
+colorscheme apprentice
+
+" Mappings
+nnoremap <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
+nnoremap <F7>  :NERDTreeToggle<CR>
+nnoremap <c-p> :Files<CR>
+nnoremap <F3>  :Ag<CR>
+nnoremap <F9>  :lopen<CR>
 
 " Display
-set relativenumber
+set number relativenumber
 set nowrap
 set laststatus=2
+set noshowmode
 set scrolloff=3
 set colorcolumn=81
+set cursorline
 
 " Misc
-set nocompatible
 set mouse+=a
 set hidden
 set wildmenu
@@ -75,11 +95,24 @@ set viminfo+=n~/.vim/misc/viminfo
 
 " Wildmenu
 set wildignorecase
-set wildignore+=*.pyc,*.retry
+set wildignore+=*.pyc,*.retry,*.bak
 
-" Speed up grep
-" set grepprg=ag\ --vimgrep\ $*
+" Autocommands
+augroup vimrc
+  autocmd!
+  autocmd FileType terraform setlocal commentstring=#%s
+augroup end
 
+" Plugin configuration
+let g:ale_sign_column_always = 1
+let g:completor_refresh_always = 0
+let g:lightline = { 'colorscheme': 'jellybeans' }
+let g:terraform_align = 1
+let g:fugitive_gitlab_domains = [ 'https://gitlab.tools.in.pan-net.eu/' ]
 let g:UltiSnipsExpandTrigger = "<c-j>"
 let g:UltiSnipsListSnippets = "<c-h>"
 
+" Set autoload defaults
+set modeline
+set exrc
+set secure
